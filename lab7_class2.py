@@ -1,7 +1,5 @@
 import math
-
-
-# ===== Задание 1. Иерархия и полиморфизм =====
+#Задание 1. Иерархия и полиморфизм
 class Shape:                                          # базовый класс
     def __init__(self, name, color):
         self.name = name                              # название фигуры
@@ -9,7 +7,6 @@ class Shape:                                          # базовый клас�
 
     def get_area(self):
         print(f"{self.name}: площадь не определена")  # базовое сообщение
-
 
 class Triangle(Shape):
     def __init__(self, name, color, a, b, c):
@@ -22,7 +19,6 @@ class Triangle(Shape):
         print(f"Треугольник '{self.name}': площадь = {area:.2f}")
         return area
 
-
 class Circle(Shape):
     def __init__(self, name, color, radius):
         super().__init__(name, color)
@@ -33,31 +29,29 @@ class Circle(Shape):
         print(f"Круг '{self.name}': площадь = {area:.2f}")
         return area
 
-
-# ===== Задание 2. Контейнер Drawing и «ловушка списков» =====
+#Задание 2. Контейнер Drawing и «ловушка списков»
 class Drawing:
     def __init__(self, name):
         self.name = name
         self._shapes = []                             # композиция: список внутри, а не наследование от list
-
+        
     def add_shape(self, shape):
         self._shapes.append(shape)                    # добавить фигуру на чертёж
-
+        
     def __len__(self):
         return len(self._shapes)                      # len(drawing)
-
+        
     def __getitem__(self, index):
         return self._shapes[index]                    # drawing[0] -> объект Shape
-
+        
     def __str__(self):                                # для пользователя (print)
         names = ", ".join(s.name for s in self._shapes)
         return f"📐 Чертёж '{self.name}': {names}"
-
+        
     def __repr__(self):                               # для разработчика (внутри списков, в отладке)
         return f"Drawing(name='{self.name}', shapes_count={len(self)})"
 
-
-# ===== Задание 3. Арифметика объектов Point2D =====
+#Задание 3. Арифметика объектов Point2D
 class Point2D:
     def __init__(self, x, y):
         self.x = x
@@ -82,7 +76,7 @@ class Point2D:
         return f"Point2D({self.x}, {self.y})"
 
 
-# ===== Задание 4. Итератор пифагоровых троек =====
+#Задание 4. Итератор пифагоровых троек
 class PythagoreanIterator:
     def __init__(self, limit):
         self.limit = limit                            # сколько троек выдать
@@ -107,8 +101,7 @@ class PythagoreanIterator:
                 self.count += 1
                 return (self.a, b, self.c)
 
-
-# ===== Демонстрация =====
+#Демонстрация
 if __name__ == "__main__":
     print("=== Задание 1: полиморфизм ===")
     shapes = [Triangle("T1", "красный", 3, 4, 5), Circle("C1", "синий", 2)]
