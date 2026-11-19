@@ -26,7 +26,7 @@ class Circle(Shape):
         print(f"Круг '{self.name}': площадь = {area:.2f}")
         return area
 
-# Задание 2. Контейнер Drawing и «ловушка списков»
+# Задание 2. Контейнер Drawing и "ловушка списков"
 class Drawing:
     def __init__(self, name):
         self.name = name
@@ -39,9 +39,9 @@ class Drawing:
         return self._shapes[index]  # drawing[0] -> объект Shape
     def __str__(self):  # для пользователя (print)
         names = ", ".join(s.name for s in self._shapes)
-        return f"📐 Чертёж '{self.name}': {names}"
+        return f"Чертёж '{self.name}': {names}"
     def __repr__(self):   # для разработчика (внутри списков, в отладке)
-        return f"Drawing(name='{self.name}', shapes_count={len(self)})"
+        return f"Чертёж(имя = '{self.name}', количество фигур = {len(self)})"
 
 # Задание 3. Арифметика объектов Point2D
 class Point2D:
@@ -49,7 +49,7 @@ class Point2D:
         self.x = x
         self.y = y
     def __add__(self, other):  # p1 + p2
-        return Point2D(self.x + other.x, self.y + other.y)  # НОВЫЙ объект, self не меняем
+        return Point2D(self.x + other.x, self.y + other.y)  # новый объект, self не меняем
     def __sub__(self, other):  # p1 - p2
         return Point2D(self.x - other.x, self.y - other.y)  # тоже новый объект
     def __abs__(self):  # abs(p)
@@ -95,20 +95,23 @@ if __name__ == "__main__":
     drawing = Drawing("Деталь №1")
     for s in shapes:
         drawing.add_shape(s)
-    print("len:", len(drawing))  # 2
-    print("drawing[0]:", drawing[0].name)  # первая фигура
-    print(drawing)  # print вызывает __str__ (красиво)
-    print([drawing])  # внутри списка Python вызывает __repr__ (технически)
+    print("Количество фигур на чертеже:", len(drawing))  # len
+    print("Первая фигура:", drawing[0].name)  # drawing[0]
+    print(drawing)  # print вызывает __str__
+    print([drawing])  # внутри списка Python вызывает __repr__
     # Ловушка: списки всегда показывают элементы через __repr__, а не __str__
 
     print("\n=== Задание 3: арифметика ===")
-    p1, p2 = Point2D(1, 2), Point2D(4, 6)
-    print("p1 + p2 =", p1 + p2)
-    print("p1 - p2 =", p1 - p2)
-    print("abs(p2) =", abs(p2))
-    print("p1 < p2:", p1 < p2, "| p1 == p2:", p1 == p2)
-    print("После операций:", p1, p2)  # не изменились (immutability)
-    print("sorted:", sorted([p2, Point2D(0, 1), p1]))  # работает благодаря __lt__
+    p1, p2 = Point2D(1, 2), Point2D(4, 6)  # две точки
+    print("Точка p1:", p1)
+    print("Точка p2:", p2)
+    print("Сумма p1 + p2 =", p1 + p2)
+    print("Разность p1 - p2 =", p1 - p2)
+    print("Расстояние от p2 до центра:", round(abs(p2), 2))
+    print("p1 ближе к центру, чем p2:", p1 < p2)
+    print("p1 и p2 равны:", p1 == p2)  # __eq__
+    print("p1 и p2 после операций не изменились:", p1, p2)  # не изменились (immutability)
+    print("Точки по удалённости от центра:", sorted([p2, Point2D(0, 1), p1]))  # sorted через __lt__
 
     print("\n=== Задание 4: итератор ===")
     it = PythagoreanIterator(5)
@@ -117,16 +120,5 @@ if __name__ == "__main__":
     try:
         next(it)  # пробуем взять ещё одно значение
     except StopIteration:
-        print("Итератор «сгорел»: он помнит, что лимит исчерпан, и не перематывается")
-    print("Повторный for:", list(it))  # [] - пусто, итератор уже исчерпан
-print("\n=== Задание 3: арифметика ===")
-p1, p2 = Point2D(1, 2), Point2D(4, 6)                       # две точки
-print("Точка p1:", p1)                                      # __repr__
-print("Точка p2:", p2)
-print("Сумма p1 + p2 =", p1 + p2)                           # __add__
-print("Разность p1 - p2 =", p1 - p2)                        # __sub__
-print("Расстояние от p2 до центра:", round(abs(p2), 2))     # __abs__
-print("p1 ближе к центру, чем p2:", p1 < p2)                # __lt__
-print("p1 и p2 равны:", p1 == p2)                           # __eq__
-print("p1 и p2 после операций не изменились:", p1, p2)      # новые объекты
-print("Точки по удалённости от центра:", sorted([p2, Point2D(0, 1), p1]))  # sorted через __lt__
+        print("Итератор исчерпан: новых троек больше нет.")
+    print("Повторный проход по итератору:", list(it))  # [] - пусто, итератор уже исчерпан
