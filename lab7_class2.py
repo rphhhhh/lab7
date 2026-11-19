@@ -1,5 +1,4 @@
 import math
-
 # Задание 1. Иерархия и полиморфизм
 class Shape:  # базовый класс
     def __init__(self, name, color):
